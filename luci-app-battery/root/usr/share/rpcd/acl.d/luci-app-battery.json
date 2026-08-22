@@ -1,0 +1,10 @@
+{
+	"luci-app-battery": {
+		"description": "Grant access to luci-app-battery RPC",
+		"read": {
+			"ubus": {
+				"luci.battery": [ "status" ]
+			}
+		}
+	}
+}
