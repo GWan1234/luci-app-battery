@@ -15,7 +15,7 @@ define Package/luci-app-battery
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=LuCI battery status on overview page
-  DEPENDS:=+luci-base +rpcd-mod-ucode
+  DEPENDS:=+luci-base +rpcd-mod-ucode +luci-mod-status
   PKGARCH:=all
 endef
 
@@ -27,15 +27,21 @@ define Package/luci-app-battery/install
 	$(INSTALL_DIR) $(1)/www/luci-static/resources/view/status/include
 	$(INSTALL_DATA) ./htdocs/luci-static/resources/view/status/include/05_battery.js $(1)/www/luci-static/resources/view/status/include/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/ucode
-	$(INSTALL_DATA) ./root/usr/share/rpcd/ucode/luci.battery $(1)/usr/share/rpcd/ucode/
+	$(INSTALL_DATA) ./root/usr/share/rpcd/ucode/luci.battery.uc $(1)/usr/share/rpcd/ucode/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
 	$(INSTALL_DATA) ./root/usr/share/rpcd/acl.d/luci-app-battery.json $(1)/usr/share/rpcd/acl.d/
 endef
 
 define Package/luci-app-battery/postinst
 #!/bin/sh
-rm -f /tmp/luci-modulecache
+rm -f /tmp/luci-modulecache /tmp/luci-indexcache.*
 /etc/init.d/rpcd reload 2>/dev/null || true
+exit 0
+endef
+
+define Package/luci-app-battery/postrm
+#!/bin/sh
+rm -f /tmp/luci-modulecache /tmp/luci-indexcache.*
 exit 0
 endef
 

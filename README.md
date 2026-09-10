@@ -12,7 +12,7 @@ LuCI 插件：在「状态 → 概览」页面显示设备电池电量与充电�
 LuCI2 概览页（luci-mod-status 的 view/status/index.js）会自动扫描并加载
 /www/luci-static/resources/view/status/include/*.js，每个文件渲染为一个信息区块。
 本插件在该目录放置 05_battery.js 实现附加显示；数据由 ucode rpcd 后端
-（/usr/share/rpcd/ucode/luci.battery）读取内核 power_supply 子系统：
+（/usr/share/rpcd/ucode/luci.battery.uc）读取内核 power_supply 子系统：
 - /sys/class/power_supply/battery/capacity
 - /sys/class/power_supply/battery/status
 - /sys/class/power_supply/charger/online

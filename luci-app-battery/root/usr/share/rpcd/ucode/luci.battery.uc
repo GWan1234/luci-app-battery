@@ -14,7 +14,7 @@ function readAttr(path) {
 	}
 	if (v == null)
 		return '';
-	return trim(v);
+	return v.trim();
 }
 
 return {
