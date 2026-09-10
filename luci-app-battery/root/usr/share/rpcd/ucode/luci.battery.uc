@@ -6,28 +6,30 @@ const BATTERY_PATH = '/sys/class/power_supply/battery';
 const CHARGER_PATH = '/sys/class/power_supply/charger';
 
 function readAttr(path) {
-	let v = null;
+	let raw = null;
 	try {
-		v = fs.readfile(path);
+		raw = fs.readfile(path);
 	} catch (e) {
-		v = null;
+		raw = null;
 	}
-	if (v == null)
-		return '';
-	return v.trim();
+	return (raw != null) ? trim(raw) : '';
 }
 
 return {
-	status: function () {
-		let capacity = readAttr(BATTERY_PATH + '/capacity') || '0';
-		let status   = readAttr(BATTERY_PATH + '/status');
-		let online   = readAttr(CHARGER_PATH + '/online');
+	"luci.battery": {
+		status: {
+			call: function (request) {
+				let capacity = readAttr(BATTERY_PATH + '/capacity') || '0';
+				let status   = readAttr(BATTERY_PATH + '/status');
+				let online   = readAttr(CHARGER_PATH + '/online');
 
-		return {
-			capacity: capacity,
-			status: status,
-			online: online,
-			charging: (status == 'Charging' || status == 'Full' || online == '1')
-		};
+				return {
+					capacity: capacity,
+					status: status,
+					online: online,
+					charging: (status == 'Charging' || status == 'Full' || online == '1')
+				};
+			}
+		}
 	}
 };
