@@ -25,7 +25,7 @@ endef
 
 define Package/luci-app-battery/install
 	$(INSTALL_DIR) $(1)/www/luci-static/resources/view/status/include
-	$(INSTALL_DATA) ./htdocs/luci-static/resources/view/status/include/05_battery.js $(1)/www/luci-static/resources/view/status/include/
+	$(INSTALL_DATA) ./htdocs/luci-static/resources/view/status/include/15_battery.js $(1)/www/luci-static/resources/view/status/include/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/ucode
 	$(INSTALL_DATA) ./root/usr/share/rpcd/ucode/luci.battery.uc $(1)/usr/share/rpcd/ucode/
 	$(INSTALL_DIR) $(1)/usr/share/rpcd/acl.d
